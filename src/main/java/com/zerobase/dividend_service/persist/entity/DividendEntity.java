@@ -13,7 +13,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @NoArgsConstructor
-public class Dividend {
+public class DividendEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
