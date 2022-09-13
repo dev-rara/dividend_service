@@ -82,7 +82,8 @@ public class YahooFinanceScraper implements Scraper{
 			Document document = Jsoup.connect(url).get();
 			Element titleEle = document.getElementsByTag("h1").get(0);
 
-			String title = titleEle.text().split(" - ")[0].trim();
+			String title = titleEle.text().split("\\(")[0].trim();
+//			String title = titleEle.text().split(" - ")[0]. trim();
 
 
 			return Company.builder()
