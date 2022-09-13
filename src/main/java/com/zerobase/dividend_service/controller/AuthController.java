@@ -1,4 +1,4 @@
-package com.zerobase.dividend_service.web;
+package com.zerobase.dividend_service.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
