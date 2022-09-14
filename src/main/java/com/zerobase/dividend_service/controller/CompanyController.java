@@ -3,7 +3,6 @@ package com.zerobase.dividend_service.controller;
 import com.zerobase.dividend_service.model.Company;
 import com.zerobase.dividend_service.persist.entity.CompanyEntity;
 import com.zerobase.dividend_service.service.CompanyService;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
