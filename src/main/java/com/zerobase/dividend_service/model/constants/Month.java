@@ -1,7 +1,5 @@
 package com.zerobase.dividend_service.model.constants;
 
-import org.springframework.data.domain.AbstractPageRequest;
-
 public enum Month {
 
 	JAN("Jan", 1),
@@ -20,9 +18,9 @@ public enum Month {
 	private String s;
 	private int number;
 
-	Month(String s, int n) {
+	Month(String s, int number) {
 		this.s = s;
-		this.number	=n;
+		this.number	= number;
 	}
 
 	public static int strToNumber(String s) {
