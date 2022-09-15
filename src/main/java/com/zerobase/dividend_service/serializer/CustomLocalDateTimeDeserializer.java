@@ -1,4 +1,4 @@
-package com.zerobase.dividend_service.config;
+package com.zerobase.dividend_service.serializer;
 
 import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParser;

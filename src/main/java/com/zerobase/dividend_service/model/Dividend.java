@@ -2,8 +2,8 @@ package com.zerobase.dividend_service.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.zerobase.dividend_service.config.CustomLocalDateTimeDeserializer;
-import com.zerobase.dividend_service.config.CustomLocalDateTimeSerializer;
+import com.zerobase.dividend_service.serializer.CustomLocalDateTimeDeserializer;
+import com.zerobase.dividend_service.serializer.CustomLocalDateTimeSerializer;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Data;
