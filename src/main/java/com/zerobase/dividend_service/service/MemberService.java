@@ -31,8 +31,9 @@ public class MemberService implements UserDetailsService {
 			throw new RuntimeException("이미 사용중인 아이디 입니다.");
 		}
 		member.setPassword(passwordEncoder.encode(member.getPassword()));
+		var result = memberRepository.save(member.toEntity());
 
-		 return memberRepository.save(member.toEntity());
+		return result;
 	}
 
 	 // 로그인시 검증

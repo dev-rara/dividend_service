@@ -1,5 +1,6 @@
 package com.zerobase.dividend_service.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,15 +39,20 @@ public class MemberEntity implements UserDetails {
 	private List<String> roles;
 
 	@Override
+	@JsonIgnore
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return this.roles.stream()
 					.map(SimpleGrantedAuthority::new)
 					.collect(Collectors.toList());
 	}
 
+	public String getPassword() {
+		return this.password;
+	}
+
 	@Override
 	public String getUsername() {
-		return null;
+		return this.username;
 	}
 
 	@Override
