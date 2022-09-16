@@ -82,7 +82,7 @@ public class YahooFinanceScraper implements Scraper{
 
 			return new Company(ticker, title);
 
-		} catch(IOException e) {
+		} catch(Exception e) {
 			throw new RuntimeException("scrapCompanyByTicker is failed.");
 		}
 	}
