@@ -4,6 +4,8 @@ import com.zerobase.dividend_service.model.Company;
 import com.zerobase.dividend_service.model.constants.CacheKey;
 import com.zerobase.dividend_service.persist.entity.CompanyEntity;
 import com.zerobase.dividend_service.service.CompanyService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.CacheManager;
 import org.springframework.data.domain.Page;
@@ -27,13 +29,15 @@ public class CompanyController {
 	private final CompanyService companyService;
 	private final CacheManager redisCacheManager;
 
+	@ApiOperation(value = "자동완성 기능으로 입력한 키워드에 해당하는 회사 목록 조회(10개)")
 	@GetMapping("autocomplete")
-	public ResponseEntity<?> autocomplete(@RequestParam String keyword) {
+	public ResponseEntity<?> autocomplete(@RequestParam @ApiParam(value = "검색 키워드") String keyword) {
 		var result = companyService.autocomplete(keyword);
 
 		return ResponseEntity.ok(result);
 	}
 
+	@ApiOperation(value = "서비스에서 관리중인 모든 회사 목록 조회")
 	@GetMapping
 	@PreAuthorize("hasRole('READ')")
 	public ResponseEntity<?> searchCompany(final Pageable pageable) {
@@ -41,6 +45,7 @@ public class CompanyController {
 		return ResponseEntity.ok(companies);
 	}
 
+	@ApiOperation(value = "새로운 회사 정보 저장")
 	@PostMapping
 	@PreAuthorize("hasRole('WRITE')")
 	public ResponseEntity<?> adCompany(@RequestBody Company request) {
@@ -55,9 +60,10 @@ public class CompanyController {
 		return ResponseEntity.ok(company);
 	}
 
+	@ApiOperation(value = "회사 정보 삭제")
 	@DeleteMapping("/{ticker}")
 	@PreAuthorize("hasRole('WRITE')")
-	public ResponseEntity<?> deleteCompany(@PathVariable String ticker) {
+	public ResponseEntity<?> deleteCompany(@PathVariable @ApiParam(value = "삭제하고 싶은 회사의 ticker") String ticker) {
 		String companyName = companyService.deleteCompany(ticker);
 		this.clearFinanceCache(companyName);
 

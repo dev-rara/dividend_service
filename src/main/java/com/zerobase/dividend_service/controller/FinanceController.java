@@ -1,6 +1,8 @@
 package com.zerobase.dividend_service.controller;
 
 import com.zerobase.dividend_service.service.FinanceService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +17,9 @@ public class FinanceController {
 
 	private final FinanceService financeService;
 
+	@ApiOperation(value = "입력한 회사의 배당금 정보 조회")
 	@GetMapping("/dividend/{companyName}")
-	public ResponseEntity<?> searchFinance(@PathVariable String companyName) {
+	public ResponseEntity<?> searchFinance(@PathVariable @ApiParam(value = "조회하려는 회사명") String companyName) {
 		var result = financeService.getDividendByCompanyName(companyName);
 		return ResponseEntity.ok(result);
 	}
