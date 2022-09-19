@@ -3,7 +3,7 @@ package com.zerobase.dividend_service.controller;
 import com.zerobase.dividend_service.model.Company;
 import com.zerobase.dividend_service.model.constants.CacheKey;
 import com.zerobase.dividend_service.persist.entity.CompanyEntity;
-import com.zerobase.dividend_service.service.CompanyService;
+import com.zerobase.dividend_service.service.impl.CompanyServiceImpl;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
@@ -26,13 +26,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/company")
 @AllArgsConstructor
 public class CompanyController {
-	private final CompanyService companyService;
+	private final CompanyServiceImpl companyServiceImpl;
 	private final CacheManager redisCacheManager;
 
 	@ApiOperation(value = "자동완성 기능으로 입력한 키워드에 해당하는 회사 목록 조회(10개)")
 	@GetMapping("autocomplete")
 	public ResponseEntity<?> autocomplete(@RequestParam @ApiParam(value = "검색 키워드") String keyword) {
-		var result = companyService.autocomplete(keyword);
+		var result = companyServiceImpl.autocomplete(keyword);
 
 		return ResponseEntity.ok(result);
 	}
@@ -41,7 +41,7 @@ public class CompanyController {
 	@GetMapping
 	@PreAuthorize("hasRole('READ')")
 	public ResponseEntity<?> searchCompany(final Pageable pageable) {
-		Page<CompanyEntity> companies = companyService.getAllCompany(pageable);
+		Page<CompanyEntity> companies = companyServiceImpl.getAllCompany(pageable);
 		return ResponseEntity.ok(companies);
 	}
 
@@ -54,8 +54,8 @@ public class CompanyController {
 			throw new RuntimeException("ticker is empty");
 		}
 
-		Company company = companyService.save(ticker);
-		companyService.addAutocompleteKeyword(company.getName());
+		Company company = companyServiceImpl.save(ticker);
+		companyServiceImpl.addAutocompleteKeyword(company.getName());
 
 		return ResponseEntity.ok(company);
 	}
@@ -64,7 +64,7 @@ public class CompanyController {
 	@DeleteMapping("/{ticker}")
 	@PreAuthorize("hasRole('WRITE')")
 	public ResponseEntity<?> deleteCompany(@PathVariable @ApiParam(value = "삭제하고 싶은 회사의 ticker") String ticker) {
-		String companyName = companyService.deleteCompany(ticker);
+		String companyName = companyServiceImpl.deleteCompany(ticker);
 		this.clearFinanceCache(companyName);
 
 		return ResponseEntity.ok(companyName);
