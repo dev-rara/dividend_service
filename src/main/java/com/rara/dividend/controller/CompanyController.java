@@ -70,7 +70,7 @@ public class CompanyController {
 		return ResponseEntity.ok(companyName);
 	}
 
-	public void clearFinanceCache(String companyName) {
+	private void clearFinanceCache(String companyName) {
 		redisCacheManager.getCache(CacheKey.KEY_FINANCE).evict(companyName);
 	}
 

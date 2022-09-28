@@ -22,11 +22,13 @@ public class MemberServiceImpl implements MemberService {
 	private final PasswordEncoder passwordEncoder;
 	private final MemberRepository memberRepository;
 
+	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		return  memberRepository.findByUsername(username)
 			.orElseThrow(() -> new UsernameNotFoundException(username + " 회원을 찾을 수 없습니다."));
  	}
 
+	@Override
 	 public MemberEntity register(SignUp member) {
 		boolean exists = memberRepository.existsByUsername(member.getUsername());
 		if (exists) {
@@ -38,7 +40,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	 // 로그인시 검증
-	 public MemberEntity authenticate(SignIn member) {
+	 @Override
+	public MemberEntity authenticate(SignIn member) {
 
 		var user = memberRepository.findByUsername(member.getUsername())
 											.orElseThrow(() -> new UsernameNotFoundException("존재하지 않은 ID 입니다."));

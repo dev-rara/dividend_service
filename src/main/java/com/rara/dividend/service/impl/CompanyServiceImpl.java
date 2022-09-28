@@ -30,6 +30,7 @@ public class CompanyServiceImpl implements CompanyService {
 	private final CompanyRepository companyRepository;
 	private final DividendRepository dividendRepository;
 
+	@Override
 	public Company save(String ticker) {
 
  		boolean exists= companyRepository.existsByTicker(ticker);
@@ -40,15 +41,18 @@ public class CompanyServiceImpl implements CompanyService {
 		 return storeCompanyAndDividend(ticker);
 	}
 
+	@Override
 	public Page<CompanyEntity> getAllCompany(Pageable pageable) {
 		return companyRepository.findAll(pageable);
 	}
 
+	@Override
 	public void addAutocompleteKeyword(String keyword) {
 		trie.put(keyword, null);
 	}
 
 	// 자동완성 Trie 방식
+	@Override
 	public List<String> autocomplete(String keyword) {
 		return (List<String>) trie.prefixMap(keyword).keySet()
 									.stream()
@@ -57,6 +61,7 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	// 자동완성 Like 방식
+	@Override
 	public List<String> getCompanyNamesByKeyword(String keyword) {
 		Pageable limit = PageRequest.of(0, 10);
 		Page<CompanyEntity> companyEntities = companyRepository.findByNameStartingWithIgnoreCase(keyword, limit);
@@ -65,7 +70,7 @@ public class CompanyServiceImpl implements CompanyService {
 						.collect(Collectors.toList());
 	}
 
-	public void deleteAutocompleteKeyword(String keyword) {
+	private void deleteAutocompleteKeyword(String keyword) {
 		trie.remove(keyword);
 	}
 
@@ -89,6 +94,7 @@ public class CompanyServiceImpl implements CompanyService {
 		return company;
 	}
 
+	@Override
 	public String deleteCompany(String ticker) {
 		var company = companyRepository.findByTicker(ticker)
 												.orElseThrow(() -> new NoCompanyException());

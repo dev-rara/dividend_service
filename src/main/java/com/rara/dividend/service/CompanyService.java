@@ -20,7 +20,5 @@ public interface CompanyService {
 	// 자동완성 Like 방식
 	List<String> getCompanyNamesByKeyword(String keyword);
 
-	void deleteAutocompleteKeyword(String keyword);
-
 	String deleteCompany(String ticker);
 }

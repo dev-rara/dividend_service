@@ -25,6 +25,7 @@ public class FinanceServiceImpl implements FinanceService {
 	private final CompanyRepository companyRepository;
 	private final DividendRepository dividendRepository;
 
+	@Override
 	@Cacheable(key = "#companyName", value = CacheKey.KEY_FINANCE)
 	public ScrapedResult getDividendByCompanyName(String companyName) {
 		log.info("search company -> " + companyName);
